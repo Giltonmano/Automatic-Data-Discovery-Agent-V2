@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Research & Equipment Discovery Agent</title>
+</head>
+<body>
+    <h1>Research & Equipment Discovery Agent</h1>
+
+    <form method="POST">
+        <input type="text" name="query" value="{{ query }}" placeholder="Search for a paper or equipment...">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if query %}
+        <h2>Papers ({{ papers|length }} found)</h2>
+        <ul>
+        {% for title, published, link, source in papers %}
+            <li><a href="{{ link }}">{{ title }}</a> ({{ source }}, {{ published }})</li>
+        {% endfor %}
+        </ul>
+
+        <h2>Equipment ({{ equipment|length }} found)</h2>
+        <ul>
+        {% for name, model, price, specs, link, source in equipment %}
+            <li><a href="{{ link }}">{{ name }}</a> — {{ price }} ({{ specs }})</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
