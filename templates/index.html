@@ -12,22 +12,26 @@
     </form>
 
     {% if query %}
-        <h2>Summary</h2>
-        <p>{{ summary }}</p>
-        
-        <h2>Papers ({{ papers|length }} found)</h2>
-        <ul>
-        {% for title, published, link, source in papers %}
-            <li><a href="{{ link }}">{{ title }}</a> ({{ source }}, {{ published }})</li>
-        {% endfor %}
-        </ul>
+        {% if papers or equipment %}
+            <h2>Summary</h2>
+            <p>{{ summary }}</p>
 
-        <h2>Equipment ({{ equipment|length }} found)</h2>
-        <ul>
-        {% for name, model, price, specs, link, source in equipment %}
-            <li><a href="{{ link }}">{{ name }}</a> — {{ price }} ({{ specs }})</li>
-        {% endfor %}
-        </ul>
+            <h2>Papers ({{ papers|length }} found)</h2>
+            <ul>
+            {% for title, published, link, source in papers %}
+                <li><a href="{{ link }}">{{ title }}</a> ({{ source }}, {{ published }})</li>
+            {% endfor %}
+            </ul>
+
+            <h2>Equipment ({{ equipment|length }} found)</h2>
+            <ul>
+            {% for name, model, price, specs, link, source in equipment %}
+                <li><a href="{{ link }}">{{ name }}</a> — {{ price }} ({{ specs }})</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% else %}
+        <p><em>Please enter a search term above.</em></p>
     {% endif %}
 </body>
 </html>

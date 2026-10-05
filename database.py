@@ -1,33 +1,35 @@
 import sqlite3
 
-
 def create_database():
     conn = sqlite3.connect("data/papers.db")
     cursor = conn.cursor()
-
-    cursor.execute("""CREATE TABLE IF NOT EXISTS papers(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
-        published TEXT,
-        link TEXT UNIQUE,
-        summary TEXT,
-        source TEXT
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS papers (
+            ...
         )
     """)
-
+    
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS equipment (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            model TEXT,
-            price TEXT,
-            specs TEXT,
-            link TEXT UNIQUE,
-            source TEXT
+            ...
         )
     """)
-
+    
     conn.commit()
+    conn.close()
+
+def save_paper(paper):
+    conn = sqlite3.connect("data/papers.db")
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            INSERT INTO papers (title, published, link, summary, source)
+            VALUES (?, ?, ?, ?, ?)
+        """, (paper["title"], paper["published"], paper["link"], paper["summary"], paper["source"]))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        pass  # already exists, skip silently
     conn.close()
 
 if __name__ == "__main__":
