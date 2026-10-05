@@ -12,6 +12,9 @@
     </form>
 
     {% if query %}
+        <h2>Summary</h2>
+        <p>{{ summary }}</p>
+        
         <h2>Papers ({{ papers|length }} found)</h2>
         <ul>
         {% for title, published, link, source in papers %}
