@@ -31,7 +31,19 @@ def save_paper(paper):
     except sqlite3.IntegrityError:
         pass  # already exists, skip silently
     conn.close()
-
+def save_equipment(item):
+    conn = sqlite3.connect("data/papers.db")
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            INSERT INTO equipment (name, model, price, specs, link, source)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (item["name"], item["model"], item["price"], item["specs"], item["link"], item["source"]))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        pass
+    conn.close()
+    
 if __name__ == "__main__":
     create_database()
     print("Database created successfully.")
